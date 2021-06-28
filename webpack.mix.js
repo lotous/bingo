@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+  require('./mix-extend/eslint/')
 
 /*
  |--------------------------------------------------------------------------
@@ -13,4 +14,14 @@ const mix = require('laravel-mix');
 
 mix.ts('resources/js/app.tsx', 'public/js')
     .react()
+    .eslint()
     .sass('resources/sass/app.scss', 'public/css');
+
+  /**
+   * extend webpackConfig in Mix
+   * .webpackConfig({
+   *     plugins: [
+   *
+   *     ]
+   * })
+   **/
