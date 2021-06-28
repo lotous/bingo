@@ -5,6 +5,7 @@ class ESLint {
     constructor() {
         this.disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
         this.isEnvDevelopment = process.env.NODE_ENV === 'development';
+        this.isEnvProduction = process.env.NODE_ENV === 'production';
         this.emitErrorsAsWarnings = this.isEnvDevelopment && process.env.ESLINT_NO_DEV_ERRORS === 'true';
         this.ESLintPlugin = require('eslint-webpack-plugin');
     }

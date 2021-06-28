@@ -12,10 +12,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.ts('resources/js/app.tsx', 'public/js')
+mix.ts('resources/js/index.tsx', 'public/js')
     .react()
     .eslint()
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/index.scss', 'public/css');
 
   /**
    * extend webpackConfig in Mix
