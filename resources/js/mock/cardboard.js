@@ -30,7 +30,7 @@ export const CardBoardMock = [
             [32100],
             [41015]
         ],
-        "selected": [2,1]
+        "selected": [2, 1]
     },
     {
         "id": 4,
@@ -41,7 +41,7 @@ export const CardBoardMock = [
             [32100],
             [41015]
         ],
-        "selected": [4,3]
+        "selected": [4, 3]
     },
     {
         "id": 5,
@@ -52,6 +52,6 @@ export const CardBoardMock = [
             [32100],
             [41015]
         ],
-        "selected": [2,3,5,1,4]
+        "selected": [2, 3, 5, 1, 4]
     }
 ]

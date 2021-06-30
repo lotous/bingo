@@ -2,39 +2,39 @@ import React from 'react';
 import { Transition } from '@headlessui/react';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getNotification, NotificationStatus, setNotification} from "../../../core";
+import { getNotification, NotificationStatus, setNotification } from "../../../core";
 
 
-const FlashMessage = () => {
-    const [show, setShow] = useState<boolean>(false);
-    const [icon, setIcon] = useState<JSX.Element | null>();
+const FlashMessage = (): JSX.Element => {
+    const [ show, setShow ] = useState<boolean>( false );
+    const [ icon, setIcon ] = useState<JSX.Element | null>();
     const dispatch = useDispatch();
-    const notification = useSelector(getNotification);
+    const notification = useSelector( getNotification );
 
-    const dispatchNotification = useCallback(() => {
+    const dispatchNotification = useCallback( () => {
         dispatch(
-            setNotification({
+            setNotification( {
                 message: '',
                 status: '',
                 show: false,
-            })
+            } )
         );
-    }, [dispatch]);
+    }, [ dispatch ] );
 
-    useEffect(() => {
-        if (notification.show) {
-            setShow(notification.show);
-            setIcon(getIcon(notification.status));
-            const timer = setTimeout(() => {
+    useEffect( () => {
+        if ( notification.show ) {
+            setShow( notification.show );
+            setIcon( getIcon( notification.status ) );
+            const timer = setTimeout( () => {
                 dispatchNotification();
-                setShow(false);
-            }, 2000);
-            return () => clearTimeout(timer);
+                setShow( false );
+            }, 2000 );
+            return () => clearTimeout( timer );
         }
-    }, [notification, dispatchNotification]);
+    }, [ notification, dispatchNotification ] );
 
-    const getIcon = (status: string) => {
-        switch (status) {
+    const getIcon = ( status: string ) => {
+        switch ( status ) {
             case NotificationStatus.FAIL:
                 return (
                     <svg
@@ -91,7 +91,7 @@ const FlashMessage = () => {
     return (
         <div className="absolute">
             <Transition
-                show={show}
+                show={ show }
                 enter="ease-out duration-500 transition"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
@@ -99,14 +99,16 @@ const FlashMessage = () => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <div className="fixed flex items-end justify-center w-full px-4 py-6 pointer-events-none top-5 right-2 sm:p-6 sm:items-start sm:justify-end">
-                    <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5">
+                <div
+                    className="fixed flex items-end justify-center w-full px-4 py-6 pointer-events-none top-5 right-2 sm:p-6 sm:items-start sm:justify-end">
+                    <div
+                        className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5">
                         <div className="p-4">
                             <div className="flex items-start">
-                                <div className="flex-shrink-0">{icon}</div>
+                                <div className="flex-shrink-0">{ icon }</div>
                                 <div className="ml-3 w-0 flex-1 pt-0.5">
                                     <p className="text-sm font-medium leading-5 text-gray-900">
-                                        {notification.message}
+                                        { notification.message }
                                     </p>
                                 </div>
                             </div>

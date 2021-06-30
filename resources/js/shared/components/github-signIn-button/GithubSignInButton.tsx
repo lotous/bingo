@@ -4,12 +4,12 @@ type GithubSignInButtonProps = {
     to: string | undefined;
 };
 
-const GithubSignInButton = ({ to }: GithubSignInButtonProps) => {
-    if (to) {
+const GithubSignInButton = ( { to }: GithubSignInButtonProps ): JSX.Element => {
+    if ( to ) {
         return (
             <div className="cursor-pointer">
                 <a
-                    href={to}
+                    href={ to }
                     className="inline-flex justify-center w-full px-4 py-2 space-x-4 text-sm font-medium text-gray-500 transition-colors duration-300 bg-white border border-gray-300 rounded-md shadow-sm dark:border-neutral-700 hover:bg-neutral-900 hover:text-neutral-50"
                 >
                     <span>Sign in with GitHub</span>
@@ -29,7 +29,7 @@ const GithubSignInButton = ({ to }: GithubSignInButtonProps) => {
             </div>
         );
     }
-    return null;
+    return <React.Fragment/>;
 };
 
 

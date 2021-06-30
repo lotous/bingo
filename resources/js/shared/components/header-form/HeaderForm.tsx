@@ -7,30 +7,29 @@ type HeaderFormProps = {
     link?: string;
 };
 
-const HeaderForm = ({ title, subTitle = '', link = '' }: HeaderFormProps) => {
+const HeaderForm = ( { title, subTitle = '', link = '' }: HeaderFormProps ): JSX.Element => {
     return (
         <div className="mb-5 sm:mx-auto sm:w-full sm:max-w-md">
-            Logo Hola MUndo
             <h2 className="mt-6 text-3xl font-extrabold text-center capitalize text-neutral-900 dark:text-neutral-200">
-                {title}
+                { title }
             </h2>
-            {subTitle && (
+            { subTitle && (
                 <p className="mt-2 text-sm text-center text-gray-600 capitalize dark:text-neutral-200 max-w">
                     Or
-                    {link ? (
+                    { link ? (
                         <Link
-                            to={link}
+                            to={ link }
                             className="ml-1 font-medium text-primary-600 hover:text-primary-500"
                         >
-                            {subTitle}
+                            { subTitle }
                         </Link>
                     ) : (
                         <span className="ml-1 font-medium text-primary-600 hover:text-primary-500">
-                            {subTitle}
+                            { subTitle }
                         </span>
-                    )}
+                    ) }
                 </p>
-            )}
+            ) }
         </div>
     );
 };

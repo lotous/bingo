@@ -1,46 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import { Loading } from "../..";
-import { useThunkDispatch }  from "../..";
+import { useThunkDispatch } from "../..";
 import { currentRoute, getAuthUser } from "../../../core";
 
 
-interface GuardedRouteProps extends RouteProps {
-    component: React.ComponentType<any>;
-}
+export interface AuthRouteProps extends RouteProps {}
 
-const AuthRoute = ({ component: Component, ...rest }: GuardedRouteProps) => {
+const AuthRoute = ( {
+    component: Component,
+    ...rest
+}: AuthRouteProps ): JSX.Element => {
+
     const dispatch = useThunkDispatch();
-    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [ isAuthenticate, setIsAuthenticate ] = useState<boolean>( false );
+    const [ isLoading, setIsLoading ] = useState<boolean>( true );
 
-    useEffect(() => {
-        const auth = async () => {
+    useEffect( () => {
+        const auth = async (): Promise<void> => {
             try {
-                await dispatch(getAuthUser());
-                setIsAuthenticate(true);
-            } catch (error) {
-                setIsAuthenticate(false);
+                dispatch( getAuthUser() );
+                setIsAuthenticate( true );
+            } catch ( error ) {
+                setIsAuthenticate( false );
             } finally {
-                setIsLoading(false);
+                setIsLoading( false );
             }
         };
         auth();
-    }, [dispatch]);
+    }, [ dispatch ] );
 
     return !isLoading ? (
         <Route
-            {...rest}
-            render={(props: any) =>
-                isAuthenticate ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to={currentRoute('login').path} />
+            { ...rest }
+            render={ ( props: RouteComponentProps<{}> ): JSX.Element =>
+                isAuthenticate ? ( Component ? (
+                    <Component { ...props } />
+                ) : ( <React.Fragment/> ) ) : (
+                    <Redirect to={ currentRoute( 'login' ).path }/>
                 )
             }
         />
     ) : (
-        <Loading />
+        <Loading/>
     );
 };
 

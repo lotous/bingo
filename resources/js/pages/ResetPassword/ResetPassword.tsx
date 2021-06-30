@@ -8,7 +8,7 @@ type ErrorsType = {
     password: Array<string> | undefined;
 };
 
-const ResetPassword = () => {
+const ResetPassword = () : JSX.Element  => {
     const query = useQuery();
     const history = useHistory();
     const [errors, setErrors] = useState<ErrorsType>();

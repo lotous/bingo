@@ -1,19 +1,33 @@
-import { SET_USER, UserActionTypes, UserState } from '../../types/userTypes';
+
+import { IUser, SET_USER, UserAction, UserState } from "../../types/user-types";
 
 export const USER_INITIAL_STATE: UserState = {
-    name: '',
-    email: '',
+    id: 1,
+    first_name: "",
+    last_name: "",
+    email: "",
     is_verified: false,
     is_github_account: false,
 };
 
-const userReducer = (state = USER_INITIAL_STATE, action: UserActionTypes) => {
+const userReducer = (
+    state: UserState = USER_INITIAL_STATE,
+    action: UserAction
+): UserState => {
     switch (action.type) {
         case SET_USER:
-            return { ...state, ...action.payload };
-        default:
-            return state;
+            const newUser: IUser = {
+                id: action.user.id,
+                first_name: action.user.first_name,
+                last_name: action.user.last_name,
+                email: action.user.email,
+            }
+            return {
+                ...state,
+                user: state.user.concat(newUser),
+            }
     }
-};
+    return state
+}
 
-export default userReducer;
+export default userReducer

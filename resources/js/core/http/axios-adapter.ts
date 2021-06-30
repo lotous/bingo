@@ -12,7 +12,7 @@ class AxiosAdapter {
     async get(url: string, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.get(url, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -21,7 +21,7 @@ class AxiosAdapter {
     async delete(url: string, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.delete(url, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -30,7 +30,7 @@ class AxiosAdapter {
     async head(url: string, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.head(url, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -39,7 +39,7 @@ class AxiosAdapter {
     async options(url: string, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.options(url, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -48,7 +48,7 @@ class AxiosAdapter {
     async post(url: string, data = {}, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.post(url, data, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -57,7 +57,7 @@ class AxiosAdapter {
     async put(url: string, data = {}, conf = {}): Promise<AxiosResponse> {
         try {
             const response = await this.client.put(url, data, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }
@@ -70,7 +70,7 @@ class AxiosAdapter {
     ): Promise<AxiosResponse> {
         try {
             const response = await this.client.patch(url, data, conf);
-            return await Promise.resolve(response);
+            return response;
         } catch (error) {
             return await Promise.reject(error);
         }

@@ -1,45 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import { getAuthUser } from '../../../core';
 import { currentRoute } from '../../../core';
-import { Loading, useThunkDispatch} from "../..";
+import { Loading, useThunkDispatch } from "../..";
 
-interface PublicRouteProps extends RouteProps {
-    component: React.ComponentType<any>;
+/**
+ * Solucion
+ * https://stackoverflow.com/questions/42309708/create-own-react-route-class-in-typescript
+ */
+
+
+export interface PublicRouteProps extends RouteProps {
 }
 
-const PublicRoute = ({ component: Component, ...rest }: PublicRouteProps) => {
+const PublicRoute = ( { component: Component, ...rest }: PublicRouteProps ): JSX.Element => {
     const dispatch = useThunkDispatch();
-    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [ isAuthenticate, setIsAuthenticate ] = useState<boolean>( false );
+    const [ isLoading, setIsLoading ] = useState<boolean>( true );
 
-    useEffect(() => {
+    useEffect( () => {
         const auth = async () => {
             try {
-                await dispatch(getAuthUser());
-                setIsAuthenticate(true);
-            } catch (error) {
-                setIsAuthenticate(false);
+                await dispatch( getAuthUser() );
+                setIsAuthenticate( true );
+            } catch ( error ) {
+                setIsAuthenticate( false );
             } finally {
-                setIsLoading(false);
+                setIsLoading( false );
             }
         };
         auth();
-    }, [dispatch]);
+    }, [ dispatch ] );
+
+    const renderFn = ( props: RouteComponentProps<{}> ) => {
+        if ( !isAuthenticate ) {
+
+            if ( !Component ) {
+                return null;
+            }
+            return <Component { ...props } />
+        }
+
+        return <Redirect to={ currentRoute( 'home' ).path }/>;
+    };
 
     return !isLoading ? (
         <Route
-            {...rest}
-            render={(props) =>
-                !isAuthenticate ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to={currentRoute('home').path} />
-                )
-            }
+            { ...rest }
+            render={ renderFn }
         />
     ) : (
-        <Loading />
+        <Loading/>
     );
 };
 

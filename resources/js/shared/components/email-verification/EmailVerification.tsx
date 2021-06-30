@@ -1,40 +1,40 @@
 import React from 'react';
 import { Transition } from '@headlessui/react';
 import { useDispatch } from 'react-redux';
-import {AuthService, setNotification, UserState} from "../../../core";
+import { AuthService, setNotification, UserState } from "../../../core";
 
 
 type BannerEmailVerificationProps = {
     user: UserState;
 };
 
-const EmailVerification = ({ user }: BannerEmailVerificationProps) => {
+const EmailVerification = ( { user }: BannerEmailVerificationProps ): JSX.Element  => {
     const dispatch = useDispatch();
 
     const sendEmailVerification = async () => {
         try {
-            await AuthService.sendVerification({});
+            await AuthService.sendVerification( {} );
             dispatch(
-                setNotification({
+                setNotification( {
                     message: 'Email Sent',
                     status: 'SUCCESS',
                     show: true,
-                })
+                } )
             );
-        } catch (error) {
+        } catch ( error ) {
             dispatch(
-                setNotification({
+                setNotification( {
                     message: 'Something went wrong. Try again later',
                     status: 'FAIL',
                     show: true,
-                })
+                } )
             );
         }
     };
 
     return (
         <Transition
-            show={!user.is_verified}
+            show={ !user.is_verified }
             enter="transition-opacity ease-in-out duration-500 sm:duration-700"
             enterFrom="opacity-0"
             enterTo="opacity-1"
@@ -50,7 +50,7 @@ const EmailVerification = ({ user }: BannerEmailVerificationProps) => {
                             </div>
                             <div className="flex-shrink-0">
                                 <button
-                                    onClick={sendEmailVerification}
+                                    onClick={ sendEmailVerification }
                                     className="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-transparent rounded-md shadow-sm text-support-600 hover:bg-support-50 focus:outline-none"
                                 >
                                     Resend Email

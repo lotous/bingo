@@ -14,10 +14,10 @@ export const NOTIFICATION_INITIAL_STATE: NotificationState = {
 const notificationReducer = (
     state = NOTIFICATION_INITIAL_STATE,
     action: NotificationActionTypes
-) => {
+): NotificationState => {
     switch (action.type) {
         case SET_NOTIFICATION:
-            return { ...action.payload };
+            return {...action.payload};
         default:
             return state;
     }

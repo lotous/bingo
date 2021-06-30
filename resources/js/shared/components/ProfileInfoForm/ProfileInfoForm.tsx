@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {AuthService, getUser, setCurrentUser, setNotification, UserState} from "../../../core";
-import {ButtonForm, InputForm} from "../..";
+import { AuthService, getUser, setCurrentUser, setNotification, UserState } from "../../../core";
+import { ButtonForm, InputForm } from "../..";
 
 
 type ErrorsType = {
@@ -9,64 +9,65 @@ type ErrorsType = {
     name: Array<string> | undefined;
 };
 
-const ProfileInfoForm = () => {
-    const user: UserState = useSelector(getUser);
+const ProfileInfoForm = (): JSX.Element => {
+    const user: UserState = useSelector( getUser );
     const dispatch = useDispatch();
-    const [name, setName] = useState<string>(user.name);
-    const [email, setEmail] = useState<string>(user.email);
-    const [errors, setErrors] = useState<ErrorsType>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [ name, setName ] = useState<string>( user.name );
+    const [ email, setEmail ] = useState<string>( user.email );
+    const [ errors, setErrors ] = useState<ErrorsType>();
+    const [ isLoading, setIsLoading ] = useState<boolean>( false );
 
-    const updateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
-        setIsLoading(true);
-        setErrors({ email: [], name: [] });
+    const updateProfile = async ( e: React.FormEvent<HTMLFormElement> ): Promise<void> => {
+        setIsLoading( true );
+        setErrors( { email: [], name: [] } );
         e.preventDefault();
         try {
-            if (user.name !== name || user.email !== email) {
-                const response = await AuthService.updateUser({
+            if ( user.name !== name || user.email !== email ) {
+                const response = await AuthService.updateUser( {
                     name: name,
                     email: email,
-                });
-                console.log(response);
+                } );
+                console.log( response );
                 dispatch(
-                    setNotification({
+                    setNotification( {
                         message: 'Profile Saved',
                         status: 'SUCCESS',
                         show: true,
-                    })
+                    } )
                 );
                 dispatch(
-                    setCurrentUser({
+                    setCurrentUser( {
                         email: email,
                         name: name,
                         is_verified: false,
                         is_github_account: false,
-                    })
+                    } )
                 );
             }
-        } catch (error) {
-            if (error.status === 422) {
-                setErrors(error.errors);
+        } catch ( error ) {
+            if ( error.status === 422 ) {
+                setErrors( error.errors );
             } else {
                 dispatch(
-                    setNotification({
+                    setNotification( {
                         message: 'Something went wrong try again later',
                         status: 'FAIL',
                         show: true,
-                    })
+                    } )
                 );
             }
         } finally {
-            setIsLoading(false);
+            setIsLoading( false );
         }
     };
 
     return (
         <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
             <section>
-                <form onSubmit={updateProfile}>
+                <form onSubmit={ updateProfile }>
                     <div className="shadow sm:rounded-md sm:overflow-hidden">
-                        <div className="px-4 py-6 bg-white dark:bg-neutral-700 sm:p-6 text-neutral-900 dark:text-neutral-200">
+                        <div
+                            className="px-4 py-6 bg-white dark:bg-neutral-700 sm:p-6 text-neutral-900 dark:text-neutral-200">
                             <div>
                                 <h2 className="text-lg font-medium leading-6">
                                     Profile Info
@@ -76,31 +77,31 @@ const ProfileInfoForm = () => {
                                 <InputForm
                                     name="name"
                                     label="name"
-                                    value={name}
-                                    handleValue={setName}
+                                    value={ name }
+                                    handleValue={ setName }
                                     wrapperStyle="col-span-4 sm:col-span-2"
                                     error={
                                         errors && errors.name
-                                            ? errors.name[0]
+                                            ? errors.name[ 0 ]
                                             : undefined
                                     }
                                 />
                                 <InputForm
                                     name="email"
                                     label="email"
-                                    value={email}
-                                    handleValue={setEmail}
+                                    value={ email }
+                                    handleValue={ setEmail }
                                     wrapperStyle="col-span-4 sm:col-span-2"
                                     error={
                                         errors && errors.email
-                                            ? errors.email[0]
+                                            ? errors.email[ 0 ]
                                             : undefined
                                     }
                                 />
                             </div>
                         </div>
                         <div className="flex justify-end px-4 py-3 bg-neutral-50 dark:bg-neutral-600 sm:px-6">
-                            <ButtonForm isLoading={isLoading}>Save</ButtonForm>
+                            <ButtonForm isLoading={ isLoading }>Save</ButtonForm>
                         </div>
                     </div>
                 </form>

@@ -1,71 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import {AuthService} from "../../core";
-import {AppLayout, ButtonForm, HeaderForm, InputForm} from "../../shared";
+import { AuthService } from "../../core";
+import { AppLayout, ButtonForm, HeaderForm, InputForm } from "../../shared";
 
 type ErrorsType = {
     email: Array<string> | undefined;
 };
 
-const ForgotPassword = () => {
-    const [errors, setErrors] = useState<ErrorsType>();
-    const [email, setEmail] = useState<string>('');
-    const [success, setSuccess] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+const ForgotPassword = (): JSX.Element => {
+    const [ errors, setErrors ] = useState<ErrorsType>();
+    const [ email, setEmail ] = useState<string>( '' );
+    const [ success, setSuccess ] = useState<boolean>( false );
+    const [ isLoading, setIsLoading ] = useState<boolean>( false );
 
-    const sendEmailReset = async (e: React.FormEvent<HTMLFormElement>) => {
+    const sendEmailReset = async ( e: React.FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
-        setIsLoading(true);
+        setIsLoading( true );
         try {
-            if (email.trim()) {
-                await AuthService.forgotPassword({ email: email });
-                setSuccess(true);
+            if ( email.trim() ) {
+                await AuthService.forgotPassword( { email: email } );
+                setSuccess( true );
             }
-        } catch ({ errors, status }) {
-            if (status === 422) {
-                setErrors(errors);
-            } else if (status === 429) {
-                setErrors({ email: ['Too many request! Try again Later'] });
+        } catch ( { errors, status } ) {
+            if ( status === 422 ) {
+                setErrors( errors );
+            } else if ( status === 429 ) {
+                setErrors( { email: [ 'Too many request! Try again Later' ] } );
             } else {
-                setErrors({
-                    email: ['Impossible to reach the server! Try again later'],
-                });
+                setErrors( {
+                    email: [ 'Impossible to reach the server! Try again later' ],
+                } );
             }
         } finally {
-            setIsLoading(false);
+            setIsLoading( false );
         }
     };
 
-    useEffect(() => {
+    useEffect( () => {
         document.title = 'Laravel React SPA - Forgot Password';
-    }, []);
+    }, [] );
 
     return (
         <AppLayout>
-            <HeaderForm title="Reset Password Link" />
-            {!success && (
+            <HeaderForm title="Reset Password Link"/>
+            { !success && (
                 <form
-                    onSubmit={sendEmailReset}
+                    onSubmit={ sendEmailReset }
                     className="flex flex-col justify-center w-full px-4 mx-auto space-y-5 xl:w-1/3 md:w-1/2"
                 >
                     <InputForm
                         label="email"
                         name="email"
                         type="email"
-                        value={email}
+                        value={ email }
                         placeholder="yourmail@test.com"
-                        handleValue={setEmail}
+                        handleValue={ setEmail }
                         error={
-                            errors && errors.email ? errors.email[0] : undefined
+                            errors && errors.email ? errors.email[ 0 ] : undefined
                         }
                     />
-                    <ButtonForm isLoading={isLoading} full>
+                    <ButtonForm isLoading={ isLoading } full>
                         <span>Send Reset Link</span>
                     </ButtonForm>
                 </form>
-            )}
+            ) }
             <Transition
-                show={success}
+                show={ success }
                 leave="transition ease-out duration-75 delay-1000"
                 enterTo="opacity-0"
                 enterFrom="opacity-1"

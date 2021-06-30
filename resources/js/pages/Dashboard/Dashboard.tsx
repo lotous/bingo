@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getUser, UserState } from "../../core";
-import { AuthLayout } from "../../shared/components/layout/AuthLayout";
+import { AuthLayout } from "../../shared";
 
 
-const Dashboard = () => {
-    const user: UserState = useSelector(getUser);
+const Dashboard = (): JSX.Element => {
+    const user: UserState = useSelector( getUser );
 
-    useEffect(() => {
+    useEffect( () => {
         document.title = 'Laravel React SPA - Dashboard';
-    }, []);
+    }, [] );
 
     return (
         <AuthLayout>
             <header>
                 <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold leading-tight">
-                        Hello {user.name}
+                        Hello { user.name }
                     </h1>
                 </div>
             </header>

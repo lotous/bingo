@@ -12,9 +12,9 @@ import userReducer from './user/userReducer';
 import notificationReducer from './notification/notificationReducer';
 
 export const store: Store<RootState, AnyAction> = createStore(
-    combineReducers({
+    combineReducers( {
         user: userReducer,
         notification: notificationReducer,
-    }),
-    composeWithDevTools(applyMiddleware(thunk))
+    } ),
+    composeWithDevTools( applyMiddleware( thunk ) )
 );
